@@ -1,0 +1,28 @@
+{:lein     true
+ :dev-http {8887 "public"}
+ :http     {:port 8888}
+ :nrepl    {:port 8889}
+
+ :builds
+ {:main  {:target           :browser
+          :output-dir       "public/js/"
+          :asset-path       "/js"
+          :modules          {:shared {:entries []}
+                             :main {:entries    [app.core]
+                                    :init-fn    app.core/main
+                                    :depends-on #{:shared}}}
+          :dev {:compiler-options
+                {:closure-defines {'goog.DEBUG true}
+                 :external-config {:guardrails {}}}}
+          :release {}
+          :compiler-options {:infer-externs      :auto
+                             :output-feature-set :es6}
+          :devtools         {:repl-pprint true
+                             :preloads [app.preload
+                                        devtools.preload
+                                        shadow.remote.runtime.cljs.browser]}}
+
+  :test {:target     :karma
+         :output-dir "target/js/test"
+         :ns-regexp "-test$"
+         :auto-run   true}}}
