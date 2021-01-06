@@ -1,6 +1,8 @@
 {:remove-surrounding-whitespace? true
- :remove-trailing-whitespace? false
+ :remove-trailing-whitespace? true
  :remove-consecutive-blank-lines? false
  :insert-missing-whitespace? true
  :align-associative? false
- :indents {>defn [[:inner 0]]}}
+ :indents {>defn [[:inner 0]]
+           plet [[:inner 0]]
+           do! [[:inner 0]]}}

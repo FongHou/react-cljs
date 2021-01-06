@@ -1,8 +1,6 @@
 (ns app.core
   (:require [app.login]
-            [app.view]
-            #_["aws-amplify" :refer [Auth] :default Amplify]
-            #_["/aws-exports" :default awsmobile]))
+            [app.view]))
 
 (defn ^:dev/after-load ^:export main []
   ;; (.configure Amplify awsmobile)

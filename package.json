@@ -11,16 +11,14 @@
     "server": "shadow-cljs server",
     "compile-tests": "shadow-cljs -A:dev compile test",
     "test": "karma start --single-run",
-    "clean": "rm -rf target; rm -rf resources/public/js"
+    "clean": "rm -rf target; rm -rf public/js"
   },
   "dependencies": {
     "history": "^5.0.0",
     "react": "16.14.0",
     "react-dom": "^16.14.0",
-    "react-hook-form": "^6.13.1",
     "react-is": "^16.13.0",
-    "react-query": "^2.26.4",
-    "react-query-devtools": "^2.6.0",
+    "react-query": "3.5.9",
     "react-router-dom": "^6.0.0-beta.0",
     "react-table": "^7.6.0",
     "xregexp": "^4.4.1"
@@ -31,9 +29,8 @@
     "karma-chrome-launcher": "^3.0.0",
     "karma-cljs-test": "^0.1.0",
     "marked": "^1.2.7",
-    "shadow-cljs": "^2.11.7",
+    "shadow-cljs": "^2.11.11",
     "swagger-ui-dist": "^3.38.0",
-    "webpack": "^5.10.3",
-    "webpack-cli": "^4.1.0"
+    "yarn": "^1.22.10"
   }
 }

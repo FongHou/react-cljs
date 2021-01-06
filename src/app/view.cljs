@@ -2,8 +2,6 @@
   (:require
    [applied-science.js-interop :as j]
    [cljsjs.console :refer [spy log]]
-   [clojure.spec.alpha :as s]
-   [com.fulcrologic.guardrails.core :refer [>defn >def | ? =>]]
    [com.wsscode.edn-json :refer [edn->json json->edn]]
    [cuerdas.core :as strx]
    [medley.core :as cljx]
@@ -15,9 +13,7 @@
    [oops.core :refer [oget oset! ocall]]
    [promesa.core :as p]
    [rumext.alpha :as mf]
-   #_["@aws-amplify/ui-react" :refer [withAuthenticator AmplifySignout]]
    ["react-router-dom" :refer [HashRouter Routes Route Link NavLink Outlet]]
-   ["react-hook-form" :refer [useForm]]
    ["react-query" :refer [useQuery]]
    ["react-table" :refer [useTable useSortBy]]
    [app.login :as login]
@@ -102,7 +98,6 @@
 (derive :count/down ::counter)
 (derive :count/reset ::counter)
 
-#ztrace
 (defmethod reducer ::counter
   [state [event & args]]
   (case event
@@ -212,29 +207,6 @@
   [:div.ui.container
    [:> Outlet nil]])
 
-(mf/defc my-form
-  []
-  (let [{:keys [register watch errors handleSubmit]} (j/lookup (useForm))
-        on-submit (fn [data] (log "on-submit" data))]
-    [:form.ui.form.warning
-     {:on-submit (handleSubmit on-submit)}
-     [:div.inline.field
-      [:label "First Name"]
-      [:input {:type "text"
-               :name "example"
-               :default-value "test"
-               :placeholder "test"
-               :ref (register)}]]
-     [:div.required.inline.field {:data-tooltip "This is required."
-                                  :data-position "bottom left"}
-      [:label "Last Name"]
-      [:input {:name "exampleRequired"
-               :placeholder "required"
-               :ref (register #js{:required true})}]]
-     (when (j/contains? errors "exampleRequired")
-       [:div.ui.warning.message "This is required."])
-     [:button.ui.button {:type "submit"} "Submit"]]))
-
 ;; React Router
 (mf/defc nav-bar []
   [:nav.ui.breadcrumb
@@ -244,8 +216,6 @@
    [:> NavLink {:to "table" :class "section"}
     "Table"]
    [:div.divider "|"]
-   [:> NavLink {:to "form" :class "section"}
-    "Form"]
    #_[:> NavLink {:to "timer/local" :class "section"}
     "Timer (local)"]
    #_[:> NavLink {:to "timer/global" :class "section"}
@@ -260,7 +230,6 @@
    [:> Routes nil
     [:> Route {:path "counter" :element ($e counter)}]
     [:> Route {:path "table" :element ($e my-table)}]
-    [:> Route {:path "form" :element ($e my-form)}]
     [:> Route {:path "timer" :element ($e timers)}
      [:> Route {:path "local"
                 :element (mf/html [:> local-timer nil "Timer (local): "])}]
@@ -272,11 +241,6 @@
   [:& app/store-provider nil
    [:& HashRouter nil
     [:& router]]])
-
-#_(mf/defc amplify []
-  (let [ui (withAuthenticator root)]
-    (js/console.log ui)
-    [:& ui]))
 
 (defonce auth-result (atom nil))
 

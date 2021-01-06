@@ -1,0 +1,15 @@
+{:clj-kondo
+   {:lint-as {com.fulcrologic.guardrails.core/>defn clojure.core/defn
+              com.fulcrologic.guardrails.core/>def clojure.core/def
+              rumext.alpha/defc clojure.core/defn
+              rumext.alpha/fnc clojure.core/fn
+              promesa.core/do! clojure.core/do
+              promesa.core/let clojure.core/let
+              promesa.core/plet clojure.core/let}
+    :linters {:unresolved-symbol {:exclude [(odoyle.rules/ruleset)]}
+              :unused-referred-var
+                {:exclude {com.fulcrologic.guardrails.core [>defn >fdef | ? =>]
+                           cljsjs.console [spy log]
+                           oops.core [oget oset!]}}}}
+ :project-specs [{:project-path "project.clj"
+                  :classpath-cmd ["lein.bat" "with-profile" "base" "classpath"]}]}

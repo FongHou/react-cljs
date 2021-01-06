@@ -6,5 +6,8 @@
            promesa.core/let clojure.core/let
            promesa.core/plet clojure.core/let}
  :linters {:unresolved-symbol
-           {:exclude [(odoyle.rules/ruleset)]}}}
-
+           {:exclude [(odoyle.rules/ruleset)]}
+           :unused-referred-var 
+           {:exclude {com.fulcrologic.guardrails.core [>defn >fdef | ? =>]
+                      cljsjs.console [spy log]
+                      oops.core [oget oset!]}}}}

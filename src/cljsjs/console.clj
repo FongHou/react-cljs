@@ -201,9 +201,9 @@
 
 (defmacro spy
   "Log and return a value."
-  [expr & args]
-  `(let [ret# ~expr]
-     (when-debug 
-      (.log js/console ~@args ret#)
+  [form & ctx]
+  `(let [ret# ~form]
+     (when-debug
+      (.log js/console ~@ctx ret#)
       (tap> ret#))
      ret#))

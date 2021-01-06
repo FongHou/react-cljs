@@ -1,6 +1,6 @@
 (ns app.store
   (:require
-   [clojure.spec.alpha :as s]
+   [clojure.spec.alpha :as spec]
    [cljsjs.use-store :refer [use-atom derived-atom]]
    [okulary.core :as ol]))
 

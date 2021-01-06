@@ -25,4 +25,4 @@
   :test {:target     :karma
          :output-dir "target/js/test"
          :ns-regexp "-test$"
-         :auto-run   true}}}
+         :autorun   true}}}
