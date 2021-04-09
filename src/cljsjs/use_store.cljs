@@ -22,7 +22,7 @@
   (let [store-atom (ol/atom nil)
         store-ro-atom (ol/derived identity store-atom)]
     [store-ro-atom
-     (mf/fnc store
+     (mf/fnc store-component
              [{:keys [children]}]
              (let [[store dispatch] (use-reducer reducer init-state)]
                (mf/use-effect
@@ -34,7 +34,7 @@
 (defn use-atom
   [reducer init-state]
   (let [dispatch-ctx (mf/create-context)
-        _ (unchecked-set dispatch-ctx "displayName" "dispatch")
+        _ (unchecked-set dispatch-ctx "displayName" "store-dispatch")
         use-dispatch (fn use-dispatch []
                        (mf/use-ctx dispatch-ctx))
         [atom provider] (make-provider reducer
