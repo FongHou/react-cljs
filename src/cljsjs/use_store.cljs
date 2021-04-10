@@ -1,8 +1,7 @@
 (ns cljsjs.use-store
-  (:require
-   [react :refer [useReducer]]
-   [okulary.core :as ol]
-   [rumext.alpha :as mf]))
+  (:require [react :refer [useReducer]]
+            [okulary.core :as ol]
+            [rumext.alpha :as mf]))
 
 (defn use-reducer
   ([reducer init-state]
@@ -19,9 +18,8 @@
 
 (defn- make-provider
   [reducer init-state dispatch-ctx]
-  (let [store-atom (ol/atom nil)
-        store-ro-atom (ol/derived identity store-atom)]
-    [store-ro-atom
+  (let [store-atom (ol/atom nil)]
+    [(ol/derived identity store-atom)
      (mf/fnc store-component
              [{:keys [children]}]
              (let [[store dispatch] (use-reducer reducer init-state)]
