@@ -25,7 +25,7 @@
      (mf/fnc store-component
              [{:keys [children]}]
              (let [[store dispatch] (use-reducer reducer init-state)]
-               (mf/use-layout-effect
+               (mf/use-effect
                 (mf/deps store)
                 #(reset! store-atom store))
                [:> (mf/provider dispatch-ctx) {:value dispatch}
