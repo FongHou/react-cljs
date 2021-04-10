@@ -18,6 +18,7 @@ pom.xml.asc
 .clj-kondo/
 .vscode/
 .shadow-cljs/
+.lsp/
 
 #amplify
 amplify/\#current-cloud-backend

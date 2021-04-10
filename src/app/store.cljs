@@ -1,5 +1,5 @@
 (ns app.store
-  (:require [cljsjs.use-store :refer [use-atom derived-atom]]))
+  (:require [cljsjs.use-store :refer [use-atom]]))
 
 (def init-state {:count 0})
 
