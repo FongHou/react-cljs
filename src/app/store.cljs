@@ -1,14 +1,14 @@
 (ns app.store
-  (:require [cljsjs.use-store :refer [use-atom]]))
+  (:require [cljsjs.use-store :refer [make-store]]))
 
 (def init-state {:count 0})
 
 (defmulti reducer (fn [_state [event]] event))
 
-(let [[atom provider use-dispatch] (use-atom reducer init-state)]
-  (def store-atom atom)
-  (def store-provider provider)
-  (def use-dispatch use-dispatch))
+(let [[atom provider dispatch] (make-store reducer init-state)]
+  (defonce store-atom atom)
+  (defonce store-provider provider)
+  (defonce use-dispatch dispatch))
 
 (comment
 

@@ -4,7 +4,7 @@
    [cljsjs.console :refer [spy log]]
    [com.wsscode.edn-json :refer [edn->json json->edn]]
    [cuerdas.core :as strx]
-   [medley.core :as cljx]
+   [medley.core :as medley]
    [goog.dom :as dom]
    [httpurr.client :as http]
    [httpurr.client.xhr :refer [client]]
@@ -17,7 +17,7 @@
    ["react-query" :refer [useQuery]]
    ["react-table" :refer [useTable useSortBy]]
    [app.login :as login]
-   [app.store :as app :refer [reducer]]))
+   [app.store :as app]))
 
 (set! *warn-on-infer* true)
 
@@ -44,7 +44,7 @@
       :placeholder   "Auto-resizing textarea"
       :on-change     (fn [_] (swap! state inc))}]))
 
-(defmethod reducer ::timer
+(defmethod app/reducer ::timer
   [state [_ data]]
   (assoc state ::timer data))
 
@@ -76,7 +76,7 @@
 ;; -----------------------------------------------------------------------------
 ;; use-store
 
-(def count-atom (ol/derived :count app/store-atom))
+(defonce count-atom (ol/derived :count app/store-atom))
 
 (mf/defc button
   {::mf/wrap [#(mf/memo % =)]}
@@ -98,7 +98,7 @@
 (derive :count/down ::counter)
 (derive :count/reset ::counter)
 
-(defmethod reducer ::counter
+(defmethod app/reducer ::counter
   [state [event & args]]
   (case event
     :count/reset
@@ -113,13 +113,14 @@
   []
   (let [dispatch (app/use-dispatch)]
     (mf/use-effect
-     #(dispatch [:count/reset 0]))
+     #(do
+        (dispatch [:count/reset 3])))
     [:div.ui.container
      [:& button {:text "-" :on-click [:count/down]}]
      [:& show]
      [:& button {:text "+" :on-click [:count/up]}]
      [:div.ui.divider]
-     [:& global-timer nil "Timer: "]]))
+     #_[:& global-timer nil "Timer: "]]))
 
 ;; ---------------------------------------------------------------------------
 
@@ -160,7 +161,7 @@
 (defn fetch-rates []
   (fetch "https://api.ratesapi.io/api/latest"))
 
-(defmethod reducer ::rates-loaded
+(defmethod app/reducer ::rates-loaded
   [state [_ data]]
   (assoc state ::rates data))
 
@@ -210,15 +211,13 @@
 ;; React Router
 (mf/defc nav-bar []
   [:nav.ui.breadcrumb
-   [:> NavLink {:to "counter" :class "section"}
-    "Counter"]
+   [:> NavLink {:to "counter" :class "section"} "Counter"]
    [:div.divider "|"]
-   [:> NavLink {:to "table" :class "section"}
-    "Table"]
-   [:div.divider "|"]
+  ;;  [:> NavLink {:to "table" :class "section"} "Table"]
+  ;;  [:div.divider "|"]
    #_[:> NavLink {:to "timer/local" :class "section"}
     "Timer (local)"]
-   #_[:> NavLink {:to "timer/global" :class "section"}
+   [:> NavLink {:to "timer/global" :class "section"}
     "Timer (global)"]])
 
 (def $e mf/element)
@@ -260,7 +259,7 @@
     ::move-player
     [:what
      [::time ::total tt]
-     [::time ::delta dt]
+     [:ime ::delta dt]
      [::player ::x x {:then false}]
      [::player ::y y {:then false}]
      :then
@@ -282,7 +281,9 @@
 
 (comment
 
-  (require '[flow-storm.api :as fsa]) 
+  (tap> @app.store/store-atom)
+
+  (require '[flow-storm.api :as fsa])
 
   (swap! *session
          (fn [session]
@@ -314,7 +315,7 @@
       (ocall ".credential.toJSON")
       (json->edn)
       spy)
-  
+
   (-> (fetch "http://localhost:3000/actor?select=*,film(title,description)")
       (p/chain js/console.log #(spy %)))
 

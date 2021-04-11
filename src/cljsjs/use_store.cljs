@@ -29,7 +29,7 @@
                [:> (mf/provider dispatch-ctx) {:value dispatch}
                 children]))]))
 
-(defn use-atom
+(defn make-store
   [reducer init-state]
   (let [dispatch-ctx (mf/create-context)
         _ (unchecked-set dispatch-ctx "displayName" "store-dispatch")
