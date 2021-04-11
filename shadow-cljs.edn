@@ -20,11 +20,7 @@
           :devtools         {:repl-pprint true
                              :preloads [app.preload
                                         devtools.preload
-                                        shadow.remote.runtime.cljs.browser]}
-          :external-config {:devtools/config
-                            {:features-to-install    [:formatters :hints]
-                             :fn-symbol              "F"
-                             :print-config-overrides true}}}
+                                        shadow.remote.runtime.cljs.browser]}}
 
   :test {:target     :karma
          :output-dir "target/js/test"
