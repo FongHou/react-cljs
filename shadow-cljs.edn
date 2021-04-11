@@ -12,9 +12,9 @@
                                                :depends-on #{:shared}}}
                    :compiler-options {:infer-externs      :auto
                                       :output-feature-set :es6}
+                   :release          {}
                    :dev              {:compiler-options {:closure-defines {'goog.DEBUG true}
                                                          :external-config {:guardrails {}}}}
-                   :release          {}
                    :devtools         {:repl-pprint true
                                       :preloads    [app.preload
                                                     devtools.preload
